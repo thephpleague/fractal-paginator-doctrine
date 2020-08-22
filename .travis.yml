@@ -11,11 +11,12 @@ matrix:
       env: COLLECT_COVERAGE=true
     - php: 7.3
     - php: 7.4
-    - php: 8.0
+    - php: nightly
     - php: hhvm
       dist: trusty
 
   allow_failures:
+    - php: nightly
     - php: hhvm
 
 install:
