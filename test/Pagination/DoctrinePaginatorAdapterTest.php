@@ -4,10 +4,12 @@ namespace League\Fractal\Test\Pagination;
 
 use League\Fractal\Pagination\DoctrinePaginatorAdapter;
 use League\Fractal\Test\TestCase;
-use Mockery;
+use Mockery as M;
 
-class DoctrinePaginatorAdapterTest extends TestCase
+class DoctrinePaginatorAdapterTest extends \PHPUnit\Framework\TestCase
 {
+    use M\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     public function testPaginationAdapter()
     {
         $total       = 50;
@@ -17,17 +19,17 @@ class DoctrinePaginatorAdapterTest extends TestCase
         $lastPage    = 10;
 
         // Mock the doctrine paginator
-        $paginator = $this->mock('Doctrine\ORM\Tools\Pagination\Paginator')->makePartial();
+        $paginator = M::mock('Doctrine\ORM\Tools\Pagination\Paginator')->makePartial();
         $paginator->shouldReceive('count')->andReturn($total);
 
         // Mock the query that the paginator is acting on
-        $query = $this->mock('Doctrine\ORM\AbstractQuery');
+        $query = M::mock('Doctrine\ORM\AbstractQuery');
         $query->shouldReceive('getFirstResult')->andReturn(($currentPage - 1) * $perPage);
         $query->shouldReceive('getMaxResults')->andReturn($perPage);
         $paginator->shouldReceive('getQuery')->andReturn($query);
 
         // Mock the iterator of the paginator
-        $iterator = $this->mock('IteratorAggregate');
+        $iterator = M::mock('IteratorAggregate');
         $iterator->shouldReceive('count')->andReturn($count);
         $paginator->shouldReceive('getIterator')->andReturn($iterator);
         $adapter = new DoctrinePaginatorAdapter($paginator, function ($page) {
