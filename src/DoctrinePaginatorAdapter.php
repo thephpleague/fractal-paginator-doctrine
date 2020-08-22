@@ -12,6 +12,8 @@
 namespace League\Fractal\Pagination;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Exception;
+use RuntimeException;
 
 /**
  * A paginator adapter for doctrine pagination.
@@ -22,7 +24,7 @@ class DoctrinePaginatorAdapter implements PaginatorInterface
 {
     /**
      * The paginator instance.
-     * @var  Paginator
+     * @var Paginator<mixed>
      */
     private $paginator;
 
@@ -35,7 +37,7 @@ class DoctrinePaginatorAdapter implements PaginatorInterface
 
     /**
      * Create a new DoctrinePaginatorAdapter.
-     * @param Paginator $paginator
+     * @param Paginator<mixed> $paginator
      * @param callable $routeGenerator
      *
      */
@@ -79,10 +81,17 @@ class DoctrinePaginatorAdapter implements PaginatorInterface
      * Get the count.
      *
      * @return int
+     *
+     * @throws Exception If the iterator cannot be resolved
+     * @throws RuntimeException If the returned iterator can't be counted
      */
     public function getCount()
     {
-        return $this->paginator->getIterator()->count();
+        $iterator = $this->paginator->getIterator();
+        if (!is_callable([$iterator, 'count'])) {
+            throw new RuntimeException('Invalid iterator returned by paginator. Must have a callable "count" method.');
+        }
+        return $iterator->count();
     }
 
     /**
