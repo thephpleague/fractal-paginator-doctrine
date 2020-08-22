@@ -12,12 +12,9 @@ matrix:
     - php: 7.3
     - php: 7.4
     - php: nightly
-    - php: hhvm
-      dist: trusty
 
   allow_failures:
     - php: nightly
-    - php: hhvm
 
 install:
   - travis_retry composer install --no-interaction --prefer-source
