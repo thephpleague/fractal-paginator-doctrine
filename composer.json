@@ -13,14 +13,13 @@
     "homepage": "http://fractal.thephpleague.com/",
     "license": "MIT",
     "require": {
-        "php": ">=7.2"
+        "php": ">=5.6"
     },
     "require-dev": {
         "mockery/mockery": "~1.0",
-        "phpstan/phpstan": "^0.11.8",
-        "phpunit/phpunit": "~8.0",
+        "phpunit/phpunit": "~8.0|~5.5",
         "squizlabs/php_codesniffer": "~3.4",
-        "league/fractal": "~1.0|1.0.x-dev",
+        "league/fractal": "~1.0|1.0.x-dev|>0.20",
         "doctrine/orm": "^2.5"
     },
     "suggest": {
@@ -38,10 +37,10 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "0.20.x-dev"
         }
     },
     "conflict": {
-        "league/fractal": "<1.0"
+        "league/fractal": "<1.0 <0.20"
     }
 }

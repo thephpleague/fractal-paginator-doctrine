@@ -15,22 +15,26 @@ class DoctrinePaginatorAdapterTest extends TestCase
         $perPage     = 5;
         $currentPage = 2;
         $lastPage    = 10;
-//Mock the doctrine paginator
-        $paginator = Mockery::mock('Doctrine\ORM\Tools\Pagination\Paginator')->makePartial();
+
+        // Mock the doctrine paginator
+        $paginator = $this->mock('Doctrine\ORM\Tools\Pagination\Paginator')->makePartial();
         $paginator->shouldReceive('count')->andReturn($total);
-//Mock the query that the paginator is acting on
-        $query = Mockery::mock('Doctrine\ORM\AbstractQuery');
+
+        // Mock the query that the paginator is acting on
+        $query = $this->mock('Doctrine\ORM\AbstractQuery');
         $query->shouldReceive('getFirstResult')->andReturn(($currentPage - 1) * $perPage);
         $query->shouldReceive('getMaxResults')->andReturn($perPage);
         $paginator->shouldReceive('getQuery')->andReturn($query);
-//Mock the iterator of the paginator
-        $iterator = Mockery::mock('IteratorAggregate');
+
+        // Mock the iterator of the paginator
+        $iterator = $this->mock('IteratorAggregate');
         $iterator->shouldReceive('count')->andReturn($count);
         $paginator->shouldReceive('getIterator')->andReturn($iterator);
         $adapter = new DoctrinePaginatorAdapter($paginator, function ($page) {
 
             return 'http://example.com/foo?page=' . $page;
         });
+
         $this->assertInstanceOf('League\Fractal\Pagination\PaginatorInterface', $adapter);
         $this->assertSame($currentPage, $adapter->getCurrentPage());
         $this->assertSame($lastPage, $adapter->getLastPage());

@@ -17,7 +17,7 @@ class TestCase extends PHPUnitTestCase
      *
      * @return \Mockery\MockInterface
      */
-    protected function getMock(...$args): Mockery\MockInterface
+    protected function mock(...$args)
     {
         return Mockery::mock(...$args);
     }
@@ -29,7 +29,7 @@ class TestCase extends PHPUnitTestCase
      * @param string|null $message
      * @param bool $regex
      */
-    public function expectException(string $exception, string $message = null, bool $regex = false): void
+    public function expectException($exception, $message = null, $regex = false)
     {
         parent::expectException($exception);
 

@@ -28,6 +28,9 @@ $ composer require league/fractal-paginator-doctrine
 
 The following versions of PHP are supported by this version.
 
+* PHP 5.6
+* PHP 7.0
+* PHP 7.1
 * PHP 7.2
 * PHP 7.3
 * PHP 7.4
